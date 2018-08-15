@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <meta name="keywords" content="<%= htmlWebpackPlugin.options.keywords %>" />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <script type="text/javascript" charset="utf-8">
+        //处理rem兼容问题
+        (function (win, doc) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                setFontSize = function () {
+                    var clientWidth = docEl.clientWidth,
+                        timer;
+                    if (!clientWidth) return;
+                    clientWidth = clientWidth > 1024 ? 375 : clientWidth;
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    document.getElementsByTagName("body")[0].style.cssText = "max-width: " + clientWidth + "px;";
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, setFontSize, false);
+            doc.addEventListener('DOMContentLoaded', setFontSize, false);
+            if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+                win.addEventListener(resizeEvt, function () {
+                    clearTimeout(timer);
+                    timer = setTimeout(setFontSize, 300);
+                }, false);
+                win.addEventListener("pageshow", function (e) {
+                    if (e.persisted) {
+                        clearTimeout(timer);
+                        timer = setTimeout(setFontSize, 300);
+                    }
+                }, false);
+                setFontSize();
+            }
+        })(window, document);
+    </script>
+</head>
+
+<body>
+    <img src="http://ss.518pay.cn/images/share.jpg" alt="" width="0" height="0" style="display: block;">
+    <img class="banner" src="${require('./images/title.png')}" alt="山商联通">
+    <img class="item1" src="${require('./images/item1.png')}" alt="山商联通">
+    <img class="item2" src="${require('./images/item2.png')}" alt="山商联通">
+    <div class="item-tit pr"></div>
+    <div class="btn-box">
+        <a href="./choose.html" class="btn-item">
+            <img src="${require('./images/btn1.png')}" alt="山商联通">
+        </a>
+        <a href="./guide.html" class="btn-item">
+            <img src="${require('./images/btn2.png')}" alt="山商联通">
+        </a>
+        <a href="http://api.bjzc.ejiaofei.cn/wechatPay?memberId=M0399" class="btn-item">
+            <img src="${require('./images/btn3.png')}" alt="山商联通">
+        </a>
+    </div>
+    <img class="arrow-down" src="${require('./images/arrow-down.png')}" alt="山商联通">
+    <div class="code-box">
+        <div class="code-item oh">
+            <img class="code-img" src="${require('./images/code-img.jpg')}" alt="山商联通">
+            <p class="code-info tc">山商通信公众号</p>
+        </div>
+        <div class="code-item oh tc">
+            <p class="code-info-tit">联通勤工助学群</p>
+            <p class="code-info-info">【237877453】</p>
+            <p class="code-info-text">自己动手赚学费！</p>
+        </div>
+    </div>
+    <div class="charge oh pr">
+        <table>
+            <tr>
+                <th class="tc">套餐</th>
+                <th>类型</th>
+                <th>套餐包含</th>
+            </tr>
+            <tr>
+                <td rowspan="4" class="tc">流量</td>
+                <td>国内流量（寒暑假）</td>
+                <td>6.43G</td>
+            </tr>
+            <tr>
+                <td>国内流量（平时）</td>
+                <td>2.43G</td>
+            </tr>
+            <tr>
+                <td>校内流量</td>
+                <td>不限流量</td>
+            </tr>
+            <tr>
+                <td>省内定向流量</td>
+                <td>10G</td>
+            </tr>
+            <tr>
+                <td rowspan="3" class="tc">通话</td>
+                <td>全国通话</td>
+                <td>160分钟</td>
+            </tr>
+            <tr>
+                <td>打给同学</td>
+                <td>1000分钟</td>
+            </tr>
+            <tr>
+                <td>打给父母</td>
+                <td>500分钟</td>
+            </tr>
+            <tr>
+                <td class="tc">短信</td>
+                <td>国内全网短信</td>
+                <td>300条</td>
+            </tr>
+            <tr>
+                <td rowspan="2" class="tc">宽带</td>
+                <td>宿舍宽带</td>
+                <td>20M光纤免费</td>
+            </tr>
+            <tr>
+                <td>WLAN</td>
+                <td>不限流量不限时长</td>
+            </tr>
+            <tr>
+                <td class="tc">接听</td>
+                <td>国内接听</td>
+                <td>免费</td>
+            </tr>
+        </table>
+        <div class="horn pa oh"></div>
+    </div>
+    <div class="bottom-box">
+        <div class="bottom-content">
+            <p class="bottom-info">该卡原套餐为28元/月
+                <br>新生参加活动后，套餐费降为13元/月，套餐内容不变</p>
+            <p class="bottom-info-info">
+                <span>更多优惠，</span>敬请关注官方微信公众号“山商通信”
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

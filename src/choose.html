@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <meta name="keywords" content="<%= htmlWebpackPlugin.options.keywords %>" />
+    <meta name="description" content="<%= htmlWebpackPlugin.options.description %>" />
+    <script type="text/javascript" charset="utf-8">
+        //处理rem兼容问题
+        (function (win, doc) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                setFontSize = function () {
+                    var clientWidth = docEl.clientWidth,
+                        timer;
+                    if (!clientWidth) return;
+                    clientWidth = clientWidth > 1024 ? 375 : clientWidth;
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    document.getElementsByTagName("body")[0].style.cssText = "max-width: " + clientWidth + "px;";
+                    if(docEl.clientWidth > 1024){
+                        document.getElementsByTagName("body")[0].className = "mes_body has-max-width";
+                        document.getElementsByClassName("modal-select")[0].style.cssText = "max-width: " + clientWidth + "px;left:50%;margin-left:-188px;";
+                    }
+                };
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, setFontSize, false);
+            doc.addEventListener('DOMContentLoaded', setFontSize, false);
+            if (/Android (\d+\.\d+)/.test(navigator.userAgent)) {
+                win.addEventListener(resizeEvt, function () {
+                    clearTimeout(timer);
+                    timer = setTimeout(setFontSize, 300);
+                }, false);
+                win.addEventListener("pageshow", function (e) {
+                    if (e.persisted) {
+                        clearTimeout(timer);
+                        timer = setTimeout(setFontSize, 300);
+                    }
+                }, false);
+                setFontSize();
+            }
+        })(window, document);
+    </script>
+</head>
+
+<body class="mes_body">
+    <img src="http://ss.518pay.cn/images/share.jpg" alt="" width="0" height="0" style="display: block;">
+    <form action="#" method="get" class="form-horizontal" id="form">
+        <div class="mes_listDemo">
+            <p class="mes_listTit">开户人信息</p>
+            <ul class="mes_list">
+                <li class="fix">
+                    <span>姓名</span>
+                    <input type="text" name="name" placeholder="请输入" maxlength="10">
+                </li>
+                <li class="fix">
+                    <span>身份证号</span>
+                    <input type="text" name="idCardNo" maxlength="18" placeholder="请输入">
+                </li>
+            </ul>
+        </div>
+        <div class="mes_listDemo">
+            <p class="mes_listTit">收货信息</p>
+            <ul class="mes_list">
+                <li class="fix" id="chooseNumber">
+                    <span>选择号码</span>
+                    <div class="form-item item-line">
+                        <input type="hidden" name="iccid">
+                        <input type="hidden" name="chosenNumber">
+                        <span id="numberResult">请选择号码</span>
+                    </div>
+                </li>
+                <li class="fix">
+                    <span>收货人姓名</span>
+                    <input type="text" name="consignee" placeholder="请输入" maxlength="10">
+                </li>
+                <li class="fix">
+                    <span>收货人手机号</span>
+                    <input type="tel" name="consigneePhoneNo" placeholder="请输入" maxlength="11">
+                </li>
+                <li class="mesYzm fix">
+                    <span>短信验证码</span>
+                    <input type="tel" name="verificationCode" maxlength="6" placeholder="请输入">
+                    <button type="button" class="sedYzm">发送验证码</button>
+                </li>
+                <li class="fix">
+                    <span>所在地区</span>
+                    <input type="hidden" name="province">
+                    <input type="hidden" name="city">
+                    <input type="hidden" name="county">
+                    <div class="form-item item-line">
+                        <span id="selectArea">请选择地区</span>
+                    </div>
+                </li>
+                <li class="mes_textarea fix">
+                    <span>详细地址</span>
+                    <textarea cols="30" rows="2" placeholder="精确到门牌号5~30个字的详细地址" name="address"></textarea>
+                </li>
+            </ul>
+        </div>
+        <p class="mes_tip"><span>*</span>请确保信息填写正确，后续实名认证以此信息为准</p>
+        <a class="mes_next" id="btnSubmit" href="javascript:;">提交</a>
+    </form>
+
+    <!--选择手机号码弹框-->
+    <div class="modal-select" id="numberChooseModal">
+        <div class="modal-tit fix">
+            <span class="tit-text l">请选择号码</span>
+            <a href="javascript:;" class="btn-close r"></a>
+        </div>
+        <ul class="select-list mui-table-view fix">
+            <div class="number-box">
+                <div class="number-list tc fix" id="numberList">
+                    <!--手机号码列表-->
+                </div>
+                <a href="javascript:;" class="btn-refresh tc" id="btnRefresh">
+                    <span class="refresh-icon"></span>
+                    <span>换一批</span>
+                </a>
+            </div>
+        </ul>
+        <a href="javascript:;" class="select-submit">确定</a>
+    </div>
+    <div class="mask position"></div>
+
+    <!-- loading toast -->
+    <div id="loadingToast">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
+    <div id="submitLoadingToast" style="display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">提交中</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
